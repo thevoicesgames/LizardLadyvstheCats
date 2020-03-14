@@ -16,7 +16,7 @@ public class exitdoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(baddie.enemynumber<=0)
+        if(baddie.enemynumber<=0 && !playermovement.dead)
         {
             exithole.active = true;
             if (hingecount < 90)

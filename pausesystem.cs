@@ -7,12 +7,13 @@ public class pausesystem : MonoBehaviour
 
     public GameObject resumes;
     public GameObject exits;
+    public GameObject retry;
     public UnityEngine.EventSystems.EventSystem ev;
    
     // Use this for initialization
     public void pausegame()
     {
-        if (Time.timeScale == 1)
+        if (Time.timeScale == 1 && !playermovement.dead)
         {
             Time.timeScale = 0;
             resumes.active = true;
@@ -34,6 +35,7 @@ public class pausesystem : MonoBehaviour
             exits.active = false;
         }
     }
+
     public void exitgame()
     {
         Time.timeScale = 1;
@@ -63,6 +65,14 @@ public class pausesystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(playermovement.dead)
+        {
+            Cursor.visible = true;
+
+            Cursor.lockState = CursorLockMode.None;
+            retry.active = true;
+        }
+      
         if (Input.GetButtonDown("pause")|| CrossPlatformInputManager.GetButtonDown("Pause"))
         {
 
@@ -82,5 +92,10 @@ public class pausesystem : MonoBehaviour
                 pausegame();
             }*/
     }
+
+
+
+
+
 }
 

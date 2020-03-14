@@ -44,11 +44,30 @@ public class startmenu : MonoBehaviour {
 
     public void StartGame()
     {
-
+        ShowAd();
+        baddie.enemieskilled = 0;
         baddie.enemynumber = 0;
         playermovement.pushed = false;
 
             Application.LoadLevel(Application.loadedLevel + 1);
+    }
+    public void StartGame2()
+    {
+        ShowAd();
+        baddie.enemieskilled = 0;
+        baddie.enemynumber = 0;
+        playermovement.pushed = false;
+
+        Application.LoadLevel(Application.loadedLevel + 2);
+    }
+    public void StartGame3()
+    {
+        ShowAd();
+        baddie.enemieskilled = 0;
+        baddie.enemynumber = 0;
+        playermovement.pushed = false;
+
+        Application.LoadLevel(Application.loadedLevel + 3);
     }
     public void loadlevel1()
     {
@@ -146,7 +165,7 @@ public class startmenu : MonoBehaviour {
         int level = PlayerPrefs.GetInt("level");
         if (level > 0)
         {
-           
+            baddie.enemynumber = 0;
           
             Application.LoadLevel(level);
         }
@@ -164,8 +183,7 @@ public class startmenu : MonoBehaviour {
     }
     void Start()
     {
-        
-
+       
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         ev.SetSelectedGameObject(null);
 
@@ -174,5 +192,59 @@ public class startmenu : MonoBehaviour {
         Cursor.visible = true;
 
         Cursor.lockState = CursorLockMode.None;
+    }
+    void Awake()
+    {
+        GameDistribution.OnResumeGame += OnResumeGame;
+        GameDistribution.OnPauseGame += OnPauseGame;
+        GameDistribution.OnPreloadRewardedVideo += OnPreloadRewardedVideo;
+        GameDistribution.OnRewardedVideoSuccess += OnRewardedVideoSuccess;
+        GameDistribution.OnRewardedVideoFailure += OnRewardedVideoFailure;
+    }
+
+    public void OnResumeGame()
+    {
+        // RESUME MY GAME
+        Time.timeScale = 1;
+        AudioListener.volume = 1;
+    }
+
+    public void OnPauseGame()
+    {
+        // PAUSE MY GAME
+        Time.timeScale = 0;
+        AudioListener.volume = 0;
+    }
+
+    public void OnRewardedVideoSuccess()
+    {
+        // Rewarded video succeeded/completed.;
+    }
+
+    public void OnRewardedVideoFailure()
+    {
+        // Rewarded video failed.;
+    }
+
+    public void OnPreloadRewardedVideo(int loaded)
+    {
+        // Feedback about preloading ad after called GameDistribution.Instance.PreloadRewardedAd
+        // 0: SDK couldn't preload ad
+        // 1: SDK preloaded ad
+    }
+
+    public void ShowAd()
+    {
+        GameDistribution.Instance.ShowAd();
+    }
+
+    public void ShowRewardedAd()
+    {
+        GameDistribution.Instance.ShowRewardedAd();
+    }
+
+    public void PreloadRewardedAd()
+    {
+        GameDistribution.Instance.PreloadRewardedAd();
     }
 }
